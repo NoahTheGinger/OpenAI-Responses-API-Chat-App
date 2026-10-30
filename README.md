@@ -92,13 +92,14 @@ The `POST /api/respond` endpoint expects the payload shown below. The Express se
 }
 ```
 
+- `temperature` is applied for models that support it. The server omits it for gpt-5 and o-series models, which reject sampling parameters.
 - `instructions` maps directly to the Responses API instructions field so you can steer tone and behaviour per request.
 - `previousResponseId` should be the `id` returned from the last response so the server can pass `previous_response_id` and maintain conversation state without resending the entire history.
 - The client persists the last response ID locally and only sends the newest user message each turn; the server fallbacks to full history if necessary for backwards compatibility.
 
 ## Useful references
 
-- [OpenAI API Reference – Responses](./OpenAI%20API%20Reference%20Docs%20Full.md)
+- [OpenAI API Reference – Responses](https://platform.openai.com/docs/api-reference/responses)
 - [OpenAI documentation](https://platform.openai.com/docs)
 
 ---

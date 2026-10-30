@@ -10,7 +10,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint": "tsc --noEmit",
-    "start": "NODE_ENV=production tsx server/index.ts"
+    "start": "cross-env NODE_ENV=production tsx server/index.ts"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -28,6 +28,7 @@
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
     "concurrently": "^8.2.2",
+    "cross-env": "^10.1.0",
     "tsx": "^4.15.7",
     "typescript": "^5.5.4",
     "vite": "^6.4.5"

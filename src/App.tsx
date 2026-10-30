@@ -1670,9 +1670,13 @@ function App() {
                     step={0.1}
                     value={temperature}
                     onChange={(event) => setTemperature(Number(event.target.value))}
+                    disabled={supportsReasoningControls}
                   />
                   <span className="field__value">{temperature.toFixed(1)}</span>
                 </div>
+                {supportsReasoningControls && (
+                  <p className="field__hint">Temperature isn&apos;t supported by gpt-5 and o-series models.</p>
+                )}
               </label>
               <label className="field">
                 <span className="field__label">Reasoning effort</span>

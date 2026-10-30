@@ -166,7 +166,8 @@ const handleResponseRequest = async (request: Request, response: Response) => {
   try {
     const apiResponse = await openai.responses.create({
       model,
-      temperature,
+      // Reasoning models reject sampling parameters such as temperature
+      ...(supportsReasoning ? {} : { temperature }),
       input: messages.map(({ role, content }) => ({
         type: 'message' as const,
         role,
@@ -175,8 +176,10 @@ const handleResponseRequest = async (request: Request, response: Response) => {
       ...(instructions ? { instructions } : {}),
       ...(reasoningEffort && supportsReasoning ? { reasoning: { effort: reasoningEffort } } : {}),
       ...(previousResponseId ? { previous_response_id: previousResponseId } : {}),
-      ...(tools.length > 0 ? { tools } : {}),
-      ...(toolChoice !== undefined ? { tool_choice: toolChoice } : {}),
+      ...(tools.length > 0 ? { tools: tools as unknown as OpenAI.Responses.Tool[] } : {}),
+      ...(toolChoice !== undefined
+        ? { tool_choice: toolChoice as OpenAI.Responses.ResponseCreateParams['tool_choice'] }
+        : {}),
       ...(typeof parallelToolCalls === 'boolean' ? { parallel_tool_calls: parallelToolCalls } : {}),
       ...(typeof maxOutputTokens === 'number' ? { max_output_tokens: maxOutputTokens } : {})
     });
